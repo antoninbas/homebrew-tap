@@ -1,8 +1,8 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "f8259635c912aabcb03783e668abcb33de667df509d8740c88f4100b8276d1e4"
+  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "49cd2405d814b0578e43cecdf41dd69feb3270175b1022aabbfa5f1fb0914fe6"
   license "MIT"
 
   depends_on "oven-sh/bun/bun"
@@ -15,6 +15,8 @@ class Knotes < Formula
     end
 
     libexec.install Dir["src", "package.json", "bun.lock", "node_modules"]
+    # Frontend node_modules needed for the built assets path resolution
+    (libexec/"src/web/app/node_modules").install Dir["src/web/app/node_modules/*"] if Dir.exist?("src/web/app/node_modules")
 
     (bin/"knotes").write <<~SH
       #!/bin/sh
