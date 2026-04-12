@@ -1,22 +1,22 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  version "0.1.0"
+  version "0.2.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/antoninbas/knotes/releases/download/v0.1.0/knotes-darwin-arm64.tar.gz"
-      sha256 "46bbc4c99b95c315075c4657e7bbcebfa85bf46472e3f52470e21dc4ac2fc3cb"
+      url "https://github.com/antoninbas/knotes/releases/download/v0.2.0/knotes-darwin-arm64.tar.gz"
+      sha256 "86e13df1891cab98ee34da0845aa95fc4c0c2e419e01bbb6a2fa5d7a6de8a9fb"
     else
-      url "https://github.com/antoninbas/knotes/releases/download/v0.1.0/knotes-darwin-x64.tar.gz"
-      sha256 "cf7141ea1404a9f9515078e25e9c84db3df62d96487a127ef191a8ac41ba9867"
+      url "https://github.com/antoninbas/knotes/releases/download/v0.2.0/knotes-darwin-x64.tar.gz"
+      sha256 "2b8007d94cce86af0423b54b90224ebc262cf4cf0d585e31fa5feb443a39d70e"
     end
   end
 
   on_linux do
-    url "https://github.com/antoninbas/knotes/releases/download/v0.1.0/knotes-linux-x64.tar.gz"
-    sha256 "4ee7df926d221dd09b7b3bd1111ab3c6866b5cc37f6b5aad0ee391b6e27a06d4"
+    url "https://github.com/antoninbas/knotes/releases/download/v0.2.0/knotes-linux-x64.tar.gz"
+    sha256 "153dd0b014e73c17036c88ee2d19497c32dd0f351fe7f109af6e1a3c8c01a7f1"
   end
 
   def install
@@ -27,29 +27,6 @@ class Knotes < Formula
     else
       bin.install "knotes-linux-x64" => "knotes"
     end
-  end
-
-  service do
-    run [opt_bin/"knotes", "server"]
-    keep_alive true
-    log_path var/"log/knotes.log"
-    error_log_path var/"log/knotes.log"
-  end
-
-  def caveats
-    <<~EOS
-      To start knotes as a background service:
-        brew services start knotes
-
-      Or use the built-in service manager:
-        knotes service install
-
-      The server runs on port 7713 by default (configurable with `knotes config set webPort <port>`).
-
-      Data is stored in ~/.knotes by default. To use a custom directory,
-      set KNOTES_HOME in your shell profile:
-        export KNOTES_HOME=/path/to/data
-    EOS
   end
 
   test do
