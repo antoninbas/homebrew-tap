@@ -44,9 +44,10 @@ class Knotes < Formula
       Or use the built-in service manager:
         knotes service install
 
-      The server runs on port 3000 by default (configurable with `knotes config set webPort <port>`).
+      The server runs on port 7713 by default (configurable with `knotes config set webPort <port>`).
 
-      To use a custom data directory, set KNOTES_HOME in your shell profile:
+      Data is stored in ~/.knotes by default. To use a custom directory,
+      set KNOTES_HOME in your shell profile:
         export KNOTES_HOME=/path/to/data
     EOS
   end
