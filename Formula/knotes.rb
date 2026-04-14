@@ -1,26 +1,26 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "49cd2405d814b0578e43cecdf41dd69feb3270175b1022aabbfa5f1fb0914fe6"
+  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.5.0.tar.gz"
+  sha256 "f885657917e86a8c119a792a0950715e50fb8925c3bedd5e3010305499c6dadf"
   license "MIT"
 
-  depends_on "oven-sh/bun/bun"
+  depends_on "node"
 
   def install
-    system "bun", "install"
+    system "npm", "install", "--production"
     cd "src/web/app" do
-      system "bun", "install"
-      system "bun", "run", "build"
+      system "npm", "install"
+      system "npx", "vite", "build"
     end
 
-    libexec.install Dir["src", "package.json", "bun.lock", "node_modules"]
+    libexec.install Dir["src", "package.json", "package-lock.json", "node_modules"]
     # Frontend node_modules needed for the built assets path resolution
     (libexec/"src/web/app/node_modules").install Dir["src/web/app/node_modules/*"] if Dir.exist?("src/web/app/node_modules")
 
     (bin/"knotes").write <<~SH
       #!/bin/sh
-      exec "#{Formula["oven-sh/bun/bun"].opt_bin}/bun" run "#{libexec}/src/main.ts" "$@"
+      exec npx tsx "#{libexec}/src/main.ts" "$@"
     SH
   end
 
