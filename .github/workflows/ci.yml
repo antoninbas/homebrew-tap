@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly on Mondays at 09:00 UTC — catch upstream breakage
+    - cron: '0 9 * * 1'
+
+jobs:
+  test-formula:
+    name: Test knotes formula
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install from tap
+        run: |
+          brew tap antoninbas/tap "$(pwd)"
+          brew install --build-from-source knotes
+      - name: Run formula test
+        run: brew test knotes
+      - name: Verify CLI
+        run: knotes --help
