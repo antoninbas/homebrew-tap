@@ -1,8 +1,8 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.6.0.tar.gz"
-  sha256 "e6a96afcba39111ade968c64ddceaa88408b520205b4f2d0f4c0254e14ab126d"
+  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.7.0.tar.gz"
+  sha256 "9e7660d647ce660b877e579d9bab5e53c591b390f48287adca2de2e2fabe7db8"
   license "MIT"
 
   depends_on "node"
@@ -13,19 +13,21 @@ class Knotes < Formula
     # Point node-gyp to local Node.js headers so better-sqlite3 compiles without network access
     ENV["npm_config_nodedir"] = Formula["node"].opt_prefix.to_s
 
-    system "npm", "install", "--omit=dev"
+    system "npm", "install"
     cd "src/web/app" do
       system "npm", "install"
       system "npx", "vite", "build"
     end
+    system "npm", "run", "build"
+    system "npm", "prune", "--omit=dev"
 
-    libexec.install Dir["src", "package.json", "package-lock.json", "node_modules"]
-    # Frontend node_modules needed for the built assets path resolution
-    (libexec/"src/web/app/node_modules").install Dir["src/web/app/node_modules/*"] if Dir.exist?("src/web/app/node_modules")
+    libexec.install "dist", "node_modules", "package.json"
 
     (bin/"knotes").write <<~SH
       #!/bin/sh
-      exec npx tsx "#{libexec}/src/main.ts" "$@"
+      KNOTES_BIN="#{bin}/knotes"
+      export KNOTES_BIN
+      exec node "#{libexec}/dist/main.js" "$@"
     SH
   end
 
