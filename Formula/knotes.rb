@@ -1,14 +1,19 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.5.2.tar.gz"
-  sha256 "e83623793fe120300d5e32b05687cf6382487d8407822e87ffd6a178ef564e18"
+  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.6.0.tar.gz"
+  sha256 "e6a96afcba39111ade968c64ddceaa88408b520205b4f2d0f4c0254e14ab126d"
   license "MIT"
 
   depends_on "node"
 
   def install
-    system "npm", "install", "--production"
+    # Skip node-llama-cpp binary download (done lazily on first use of `knotes embed`)
+    ENV["NODE_LLAMA_CPP_SKIP_DOWNLOAD"] = "1"
+    # Point node-gyp to local Node.js headers so better-sqlite3 compiles without network access
+    ENV["npm_config_nodedir"] = Formula["node"].opt_prefix.to_s
+
+    system "npm", "install", "--omit=dev"
     cd "src/web/app" do
       system "npm", "install"
       system "npx", "vite", "build"
