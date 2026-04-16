@@ -1,8 +1,8 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.8.0.tar.gz"
-  sha256 "d6b87e344063d8cae7cd240871f828de7538d36ee42617069addeae7ad603a4e"
+  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.8.1.tar.gz"
+  sha256 "b2612884d21f56977993077ac214624dafbd69e3688ec39d05efd5210f633cd2"
   license "MIT"
 
   depends_on "node"
@@ -27,7 +27,7 @@ class Knotes < Formula
       #!/bin/sh
       KNOTES_BIN="#{bin}/knotes"
       export KNOTES_BIN
-      exec node "#{libexec}/dist/main.js" "$@"
+      exec "#{Formula["node"].opt_bin}/node" "#{libexec}/dist/main.js" "$@"
     SH
   end
 
