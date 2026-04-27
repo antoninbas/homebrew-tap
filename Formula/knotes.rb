@@ -1,8 +1,8 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.15.0.tar.gz"
-  sha256 "693f9f8af783fb0b3b6633018c78c1db62924ce6d90a61987814f7db77b0876c"
+  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.16.0.tar.gz"
+  sha256 "e636a46b103e694cdb3f38684b7992c5afedf6d4913c8af8472e1e9e158e994a"
   license "MIT"
 
   depends_on "node"
