@@ -1,8 +1,8 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.16.0.tar.gz"
-  sha256 "e636a46b103e694cdb3f38684b7992c5afedf6d4913c8af8472e1e9e158e994a"
+  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.16.1.tar.gz"
+  sha256 "ecde466e0609b7ca433d9cc264e0ca1e565cbbc4c0f8b142b8aea77b50cd4276"
   license "MIT"
 
   depends_on "node"
@@ -36,6 +36,7 @@ class Knotes < Formula
     keep_alive true
     log_path var/"log/knotes.log"
     error_log_path var/"log/knotes.log"
+    environment_variables PATH: std_service_path_env
   end
 
   def caveats
