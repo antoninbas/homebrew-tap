@@ -1,8 +1,8 @@
 class Knotes < Formula
   desc "Local-first note and activity log manager with hybrid search"
   homepage "https://github.com/antoninbas/knotes"
-  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.16.1.tar.gz"
-  sha256 "ecde466e0609b7ca433d9cc264e0ca1e565cbbc4c0f8b142b8aea77b50cd4276"
+  url "https://github.com/antoninbas/knotes/archive/refs/tags/v0.17.0.tar.gz"
+  sha256 "ab82c59f7e68ea13aeb4b8a87cd927d5011ae2f69ab2fc591bfc7e256da0893b"
   license "MIT"
 
   depends_on "node"
@@ -27,13 +27,15 @@ class Knotes < Formula
       #!/bin/sh
       KNOTES_BIN="#{bin}/knotes"
       export KNOTES_BIN
+      KNOTES_INSTALL_METHOD=brew
+      export KNOTES_INSTALL_METHOD
       exec "#{Formula["node"].opt_bin}/node" "#{libexec}/dist/main.js" "$@"
     SH
   end
 
   service do
     run [bin/"knotes", "server"]
-    keep_alive true
+    keep_alive crashed: true
     log_path var/"log/knotes.log"
     error_log_path var/"log/knotes.log"
     environment_variables PATH: std_service_path_env
